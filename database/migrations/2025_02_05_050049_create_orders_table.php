@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
             $table->enum('payment_method', ['cash_on_delivery', 'online_payment'])->default('cash_on_delivery');
-            $table->enum('status', ['in_cart', 'pending', 'processing', 'delivered', 'cancelled'])->default('pending');
+            $table->enum('status', ['in_cart', 'pending', 'processing', 'delivered', 'cancelled'])->default('in_cart');
             $table->text('note')->nullable();
             $table->timestamps();
 

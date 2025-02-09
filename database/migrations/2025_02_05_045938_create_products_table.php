@@ -21,6 +21,7 @@ return new class extends Migration {
             $table->decimal('price', 8, 2);
             $table->integer('quantity');
             $table->bigInteger('views')->default(0);
+            $table->enum('type', ['basic', 'hot', 'new', 'special'])->default('basic');
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
