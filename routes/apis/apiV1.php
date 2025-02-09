@@ -24,7 +24,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('logout', [authController::class, 'logout']);
 });
 
-Route::get('/categories', [homeController::class, 'categories']);
+Route::get('/get-categories', [homeController::class, 'categories']);
 Route::get('/category/{id}', [homeController::class, 'category']);
 Route::get('/hot-market', [homeController::class, 'hotProducts']);
 
