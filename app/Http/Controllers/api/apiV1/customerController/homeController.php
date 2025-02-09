@@ -11,13 +11,19 @@ class homeController extends Controller
 {
     public function categories()
     {
-        $categories = Category::where('status', 'active')->with([
-            'products' => function ($q) {
+        $categories = Category::where('status', 'active')
+            ->whereHas('products', function ($q) {
                 $q->where('status', 'active')
-                    ->where('type', 'basic')
-                    ->take(5);
-            }
-        ])->get();
+                    ->where('type', 'basic');
+            })
+            ->with([
+                'products' => function ($q) {
+                    $q->where('status', 'active')
+                        ->where('type', 'basic')
+                        ->take(5);
+                }
+            ])
+            ->get();
 
         return response()->json([
             'categories' => $categories
