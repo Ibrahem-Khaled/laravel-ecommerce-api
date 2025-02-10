@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Notification;
+use App\Models\Notification;
 
 class homeController extends Controller
 {
