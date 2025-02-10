@@ -27,6 +27,7 @@ Route::middleware('auth:api')->group(function () {
 Route::get('/get-categories', [homeController::class, 'categories']);
 Route::get('/category/{id}', [homeController::class, 'category']);
 Route::get('/hot-market', [homeController::class, 'hotProducts']);
+Route::get('/get-notification', [homeController::class, 'notification']);
 
 Route::get('/user-cart', [orderController::class, 'cart']);
 Route::post('/add-product-to-cart', [orderController::class, 'addProduct']);
