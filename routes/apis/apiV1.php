@@ -23,6 +23,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('update-profile', [authController::class, 'update']);
     Route::get('me', [authController::class, 'user']);
     Route::post('logout', [authController::class, 'logout']);
+    Route::post('change-password', [authController::class, 'changePassword']);
+    Route::post('delete-account', [authController::class, 'delete']);
 });
 
 Route::get('/get-categories', [homeController::class, 'categories']);

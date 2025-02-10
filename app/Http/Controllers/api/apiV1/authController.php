@@ -127,4 +127,33 @@ class authController extends Controller
             return response()->json(['error' => 'فشل تسجيل الخروج'], 500);
         }
     }
+
+    public function changePassword(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        $validatedData = Validator::make($request->all(), [
+            'old_password' => 'required|string',
+            'new_password' => 'required|string|min:6',
+        ]);
+
+        if ($validatedData->fails()) {
+            return response()->json(['errors' => $validatedData->errors()], 422);
+        }
+
+        if (!Hash::check($request->old_password, $user->password)) {
+            return response()->json(['error' => 'كلمة المرور القديمة غير صحيحة'], 401);
+        }
+
+        $user->password = bcrypt($request->new_password);
+        $user->save();
+
+        return response()->json(['message' => 'تم تغيير كلمة المرور بنجاح']);
+    }
+
+    public function delete()
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        $user->delete();
+        return response()->json(['message' => 'تم حذف المستخدم بنجاح']);
+    }
 }
