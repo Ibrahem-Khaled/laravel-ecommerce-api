@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('register', [authController::class, 'register']);
 Route::post('login', [authController::class, 'login']);
 Route::middleware('auth:api')->group(function () {
+    Route::post('update-profile', [authController::class, 'update']);
     Route::get('me', [authController::class, 'user']);
     Route::post('logout', [authController::class, 'logout']);
 });

@@ -65,6 +65,43 @@ class authController extends Controller
         ]);
     }
 
+
+    public function update(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+
+        $validatedData = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'phone' => 'required|string',
+            'address' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'gender' => 'nullable|string|in:male,female,other',
+        ]);
+
+        if ($validatedData->fails()) {
+            return response()->json(['errors' => $validatedData->errors()], 422);
+        }
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+            $user->image = $imageName;
+        }
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->address = $request->address;
+        $user->gender = $request->gender;
+        $user->save();
+
+        return response()->json([
+            'message' => 'تم تحديث بيانات المستخدم بنجاح',
+            'user' => $user,
+        ]);
+    }
+
     /**
      * جلب بيانات المستخدم الحالي
      */
