@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('email')->unique()->nullable();
-            $table->string('phone')->unique()->nullable();
+            $table->string('phone')->unique();
             $table->string('address')->nullable();
             $table->string('image')->nullable();
             $table->enum('status', ['active', 'inactive', 'deleted', 'blocked'])->default('active');

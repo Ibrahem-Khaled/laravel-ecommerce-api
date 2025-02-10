@@ -18,7 +18,6 @@ class authController extends Controller
         // التحقق من صحة البيانات
         $validatedData = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
             'phone' => 'required|string',
             'password' => 'required|string|min:6',
         ]);
@@ -29,7 +28,6 @@ class authController extends Controller
         // إنشاء المستخدم
         $user = User::create([
             'name' => $request->name,
-            'email' => $request->email,
             'phone' => $request->phone,
             'password' => Hash::make($request->password), // تشفير كلمة المرور
         ]);
@@ -49,7 +47,7 @@ class authController extends Controller
      */
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('phone', 'password');
 
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
