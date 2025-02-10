@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Notification;
 
 class homeController extends Controller
 {
@@ -55,6 +56,14 @@ class homeController extends Controller
         return response()->json([
             'products' => $products
         ]);
+    }
+
+    public function notification()
+    {
+        $user = auth()->guard('api')->user();
+
+        $notifications = Notification::where('user_id', $user->id)->orWhere('user_id', null)->latest()->take(5)->get();
+        return response()->json($notifications);
     }
 
 }
