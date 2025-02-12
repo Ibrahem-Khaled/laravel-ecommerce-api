@@ -14,12 +14,64 @@ class orderController extends Controller
         $user = auth()->guard('api')->user();
 
         $orders = $user->orders()->where('status', 'in_cart')->latest()->first();
+        if (!$orders) {
+            return response()->json([
+                'success' => false,
+                'orders' => [],
+                'message' => 'لم تقم بطلب منتجات'
+            ], 404);
+        }
+
         $orders->load('products');
         return response()->json([
             'success' => true,
             'orders' => $orders,
             'order_count' => $orders->products()->count(),
             // 'total_price' => $orders->products()->sum('price')
+        ], 200);
+    }
+
+    public function checkout(Request $request)
+    {
+        $user = auth()->guard('api')->user();
+        $order = Order::where('user_id', $user->id)->where('status', 'in_cart')->first();
+        if (!$order) {
+            return response()->json([
+                'success' => false,
+                'message' => 'لم تقم بطلب منتجات'
+            ], 404);
+        }
+        $order->status = 'pending';
+        $order->save();
+
+        return response()->json([
+            'success' => true,
+            'order' => $order
+        ], 200);
+    }
+
+    public function userOrders()
+    {
+        $user = auth()->guard('api')->user();
+        $orders = $user->orders()
+        ->with('user')
+        ->where('status', '!=', 'in_cart')->latest()->get();
+        return response()->json([
+            'success' => true,
+            'orders' => $orders
+        ], 200);
+    }
+
+    public function orderDetails($id)
+    {
+        $user = auth()->guard('api')->user();
+        $order = $user->orders()->where('status', '!=', 'in_cart')->where('id', $id)
+            ->with('products')
+            ->first();
+
+        return response()->json([
+            'success' => true,
+            'order' => $order
         ], 200);
     }
 

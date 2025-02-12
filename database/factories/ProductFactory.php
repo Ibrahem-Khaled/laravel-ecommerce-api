@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Category;
+use App\Models\SubCategory;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,7 +20,7 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'category_id' => Category::inRandomOrder()->first()->id ?? Category::factory(),
+            'sub_category_id' => SubCategory::inRandomOrder()->first()->id ?? SubCategory::factory(),
             'user_id' => User::inRandomOrder()->first()->id ?? User::factory(),
             'name' => $this->faker->word,
             'description' => $this->faker->sentence,

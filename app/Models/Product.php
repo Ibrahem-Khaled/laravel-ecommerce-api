@@ -21,10 +21,14 @@ class Product extends Model
         'category_id',
         'user_id',
     ];
+    //this cast is used to convert the json string to array
+    protected $casts = [
+        'images' => 'array',
+    ];
 
-    public function category()
+    public function subCategory()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(SubCategory::class);
     }
 
     public function user()

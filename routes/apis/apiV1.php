@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('register', [authController::class, 'register']);
 Route::post('login', [authController::class, 'login']);
+
 Route::middleware('auth:api')->group(function () {
     Route::post('update-profile', [authController::class, 'update']);
     Route::get('me', [authController::class, 'user']);
@@ -27,12 +28,22 @@ Route::middleware('auth:api')->group(function () {
     Route::post('delete-account', [authController::class, 'delete']);
 });
 
-Route::get('/get-categories', [homeController::class, 'categories']);
+//this routes for customer main
+Route::get('get-categories', [homeController::class, 'categories']);
 Route::get('/category/{id}', [homeController::class, 'category']);
-Route::get('/hot-market', [homeController::class, 'hotProducts']);
+
+Route::get('/get-all-sub-categories', [homeController::class, 'getAllSubCategories']);
+Route::get('/sub-categories/{id}', [homeController::class, 'subCategories']);
+
+Route::get('/get-products', [HomeController::class, 'Products']);
 Route::get('/get-notification', [homeController::class, 'notification']);
+Route::get('/search', [homeController::class, 'search']);
 
 Route::get('/user-cart', [orderController::class, 'cart']);
+Route::post('/checkout', [orderController::class, 'checkout']);
+Route::get('/user-orders', [orderController::class, 'userOrders']);
+Route::get('/order-details/{id}', [orderController::class, 'orderDetails']);
+
 Route::post('/add-product-to-cart', [orderController::class, 'addProduct']);
 Route::post('/remove-product-cart', [orderController::class, 'removeProduct']);
 Route::post('/update-quantity-product-cart', [orderController::class, 'updateQuantity']);

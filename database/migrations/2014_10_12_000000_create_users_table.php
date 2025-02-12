@@ -25,6 +25,17 @@ return new class extends Migration {
             $table->rememberToken();
             $table->timestamps();
         });
+
+        DB::table('users')->insert([
+            'name' => 'Admin',
+            'email' => 'Enad.codex@gmail.com',
+            'phone' => '01000000000',
+            'password' => Hash::make('enad2011'),
+            'role' => 'admin',
+            'status' => 'active',
+            'gender' => 'male',
+            'image' => 'https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80'
+        ]);
     }
 
     /**

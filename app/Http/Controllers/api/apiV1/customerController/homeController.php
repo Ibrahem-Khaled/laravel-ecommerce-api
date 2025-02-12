@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api\apiV1\customerController;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use App\Models\Notification;
 
@@ -12,19 +13,7 @@ class homeController extends Controller
 {
     public function categories()
     {
-        $categories = Category::where('status', 'active')
-            ->whereHas('products', function ($q) {
-                $q->where('status', 'active')
-                    ->where('type', 'basic');
-            })
-            ->with([
-                'products' => function ($q) {
-                    $q->where('status', 'active')
-                        ->where('type', 'basic')
-                        ->take(5);
-                }
-            ])
-            ->get();
+        $categories = Category::where('status', 'active')->get();
 
         return response()->json([
             'categories' => $categories
@@ -33,26 +22,57 @@ class homeController extends Controller
 
     public function category($id)
     {
-        $category = Category::with([
-            'products' => function ($q) {
-                $q->where('status', 'active')
-                    ->where('type', 'basic');
-            }
-        ])->find($id);
+        $category = Category::find($id);
 
         return response()->json([
             'category' => $category
         ]);
     }
 
-    public function hotProducts()
+    public function getAllSubCategories()
     {
-        $products = Product::where('status', 'active')->where('type', 'hot')->with([
-            'category',
-            'user'
-        ])
-            ->orderBy('created_at', 'desc')
+        $subCategories = SubCategory::where('status', 'active')->get();
+
+        return response()->json([
+            'subCategories' => $subCategories
+        ]);
+    }
+
+    public function subCategories($id)
+    {
+        $subCategories = Category::find($id)->subCategories()->where('status', 'active')->get();
+
+        return response()->json([
+            'subCategories' => $subCategories
+        ]);
+    }
+
+
+    public function Products(Request $request)
+    {
+        $type = $request->query('type', 'basic');
+        $subCategory = $request->query('subCategory', null);
+
+        if ($subCategory) {
+            $products = SubCategory::find($subCategory)->products()
+                ->where('status', 'active')
+                ->with(['subCategory.category', 'user'])
+                ->orderByDesc('created_at')
+                ->take(30)
+                ->get();
+
+            return response()->json([
+                'products' => $products,
+            ]);
+        }
+
+        $products = Product::where('status', 'active')
+            ->where('type', $type)
+            ->with(['subCategory.category', 'user'])
+            ->orderByDesc('created_at')
+            ->take(30)
             ->get();
+
         return response()->json([
             'products' => $products
         ]);
@@ -66,4 +86,11 @@ class homeController extends Controller
         return response()->json($notifications);
     }
 
+    public function search(Request $request)
+    {
+        $search = $request->query('q');
+        $products = Product::where('name', 'like', '%' . $search . '%')
+            ->with(['subCategory.category', 'user'])->get();
+        return response()->json($products);
+    }
 }
