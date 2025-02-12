@@ -29,7 +29,7 @@ Route::middleware('auth:api')->group(function () {
 });
 
 //this routes for customer main
-Route::get('/get-categories', [homeController::class, 'categories']);
+Route::get('/get-all-categories', [homeController::class, 'categories']);
 Route::get('/category/{id}', [homeController::class, 'category']);
 
 Route::get('/get-all-sub-categories', [homeController::class, 'getAllSubCategories']);
