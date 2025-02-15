@@ -1,7 +1,14 @@
 <?php
 
+use App\Http\Controllers\api\apiV1\adminControllers\CategoryController;
+use App\Http\Controllers\api\apiV1\adminControllers\NotificationController;
+use App\Http\Controllers\api\apiV1\adminControllers\ProductController;
+use App\Http\Controllers\api\apiV1\adminControllers\SubCategoryController;
+use App\Http\Controllers\api\apiV1\adminControllers\usersController;
+use App\Http\Controllers\api\apiV1\adminControllers\OrderController as AdminOrderController;
 use App\Http\Controllers\api\apiV1\authController;
 use App\Http\Controllers\api\apiV1\customerController\homeController;
+use App\Http\Controllers\api\apiV1\customerController\LiveChatController;
 use App\Http\Controllers\api\apiV1\customerController\orderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -47,3 +54,22 @@ Route::get('/order-details/{id}', [orderController::class, 'orderDetails']);
 Route::post('/add-product-to-cart', [orderController::class, 'addProduct']);
 Route::post('/remove-product-cart', [orderController::class, 'removeProduct']);
 Route::post('/update-quantity-product-cart', [orderController::class, 'updateQuantity']);
+
+Route::get('/live-chat', [LiveChatController::class, 'index']);
+Route::post('/live-chat', [LiveChatController::class, 'store']);
+
+//this admin panel routes && CRUD
+
+Route::apiResource('users', usersController::class);
+Route::apiResource('categories', CategoryController::class);
+Route::apiResource('sub-categories', SubCategoryController::class);
+Route::apiResource('products', ProductController::class);
+Route::apiResource('notifications', NotificationController::class);
+
+Route::get('/orders', [AdminOrderController::class, 'index']);
+Route::get('/order/{id}', [AdminOrderController::class, 'show']);
+Route::put('/order/{id}', [AdminOrderController::class, 'update']);
+
+Route::get('/chats', [\App\Http\Controllers\api\apiV1\adminControllers\LiveChatController::class, 'index']);
+Route::post('/replay/{chatId}', [\App\Http\Controllers\api\apiV1\adminControllers\LiveChatController::class, 'replay']);
+Route::delete('/chat/{chatId}', [\App\Http\Controllers\api\apiV1\adminControllers\LiveChatController::class, 'destroy']);

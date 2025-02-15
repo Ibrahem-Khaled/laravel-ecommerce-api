@@ -50,6 +50,10 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Notification::class);
     }
 
+    public function chats()
+    {
+        return $this->hasMany(LiveChat::class, 'user_id');
+    }
 
 
     public function getJWTIdentifier()

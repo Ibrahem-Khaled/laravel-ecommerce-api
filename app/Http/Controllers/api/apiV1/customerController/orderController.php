@@ -54,8 +54,8 @@ class orderController extends Controller
     {
         $user = auth()->guard('api')->user();
         $orders = $user->orders()
-        ->with('user')
-        ->where('status', '!=', 'in_cart')->latest()->get();
+            ->with('user')
+            ->where('status', '!=', 'in_cart')->latest()->get();
         return response()->json([
             'success' => true,
             'orders' => $orders
@@ -144,7 +144,7 @@ class orderController extends Controller
         }
 
         $order->products()->updateExistingPivot($request->product_id, [
-            'quantity' => $request->quantity,
+            'quantity' => $request->quantity <= 0 ? 1 : $request->quantity,
         ]);
 
         return response()->json([

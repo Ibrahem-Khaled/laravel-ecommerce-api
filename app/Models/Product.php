@@ -18,7 +18,7 @@ class Product extends Model
         'quantity',
         'views',
 
-        'category_id',
+        'sub_category_id',
         'user_id',
     ];
     //this cast is used to convert the json string to array
