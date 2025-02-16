@@ -38,16 +38,18 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::post('orders/{id}/update-status', [OrderController::class, 'updateStatus'])
         ->name('orders.update-status');
 
-    Route::resource('live-chat', LiveChatController::class)->only(['index', 'store']);
+    // صفحة اختيار المستخدم لبدء الدردشة
+    Route::get('live-chat', [LiveChatController::class, 'index'])->name('live-chat.index');
 
-    Route::get('live-chat/{user}/messages', [LiveChatController::class, 'getMessages'])
-        ->name('live-chat.messages');
+    // عرض دردشة المستخدم المحدد
+    Route::get('live-chat/user/{userId}', [LiveChatController::class, 'showUserChat'])->name('dashboard.live-chat.user');
 
-    Route::get('live-chat/{user}/unread-count', [LiveChatController::class, 'getUnreadCount'])
-        ->name('live-chat.unread-count');
+    // جلب الرسائل الخاصة بالمستخدم المحدد (AJAX)
+    Route::get('live-chat/fetch/{userId}', [LiveChatController::class, 'fetchUserChatMessages'])->name('dashboard.live-chat.fetch.user');
 
-    Route::post('live-chat/{chat}/update-status', [LiveChatController::class, 'updateStatus'])
-        ->name('live-chat.update-status');
+    // إرسال رسالة للمستخدم المحدد (AJAX)
+    Route::post('live-chat/send/{userId}', [LiveChatController::class, 'sendMessage'])->name('dashboard.live-chat.send');
+
 
 });
 
