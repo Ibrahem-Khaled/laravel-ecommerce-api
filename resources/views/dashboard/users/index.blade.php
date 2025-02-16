@@ -187,7 +187,7 @@
                         <div class="form-group">
                             <label for="password">كلمة المرور</label>
                             <input type="password" class="form-control" id="password" name="password" required>
-                        </div>
+                        </div> 
                         <div class="form-group">
                             <label for="status">الحالة</label>
                             <select class="form-control" id="status" name="status">
