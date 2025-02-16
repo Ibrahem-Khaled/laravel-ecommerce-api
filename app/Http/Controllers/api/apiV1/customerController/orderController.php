@@ -66,7 +66,7 @@ class orderController extends Controller
     {
         $user = auth()->guard('api')->user();
         $order = $user->orders()->where('status', '!=', 'in_cart')->where('id', $id)
-            ->with('products')
+            ->with('products', 'user')
             ->first();
 
         return response()->json([
