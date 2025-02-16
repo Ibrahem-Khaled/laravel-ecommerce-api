@@ -103,6 +103,9 @@
                                                                 <option value="admin"
                                                                     {{ $user->role == 'admin' ? 'selected' : '' }}>مدير
                                                                 </option>
+                                                                <option value="worker"
+                                                                    {{ $user->role == 'worker' ? 'selected' : '' }}>عامل
+                                                                </option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -197,6 +200,7 @@
                             <select class="form-control" id="role" name="role">
                                 <option value="user">مستخدم</option>
                                 <option value="admin">مدير</option>
+                                <option value="worker">عامل</option>
                             </select>
                         </div>
                     </div>
