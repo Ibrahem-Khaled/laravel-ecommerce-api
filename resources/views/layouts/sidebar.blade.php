@@ -54,5 +54,10 @@
             <i class="fas fa-fw fa-box"></i>
             <span> الطلبات</span></a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('live-chat.index') }}">
+            <i class="fas fa-fw fa-comments"></i>
+            <span> المحادث الحية</span></a>
+    </li>
     
 </ul>

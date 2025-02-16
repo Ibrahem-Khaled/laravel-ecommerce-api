@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\dashboardControllers\CategoryController;
 use App\Http\Controllers\dashboardControllers\homeController;
+use App\Http\Controllers\dashboardControllers\LiveChatController;
 use App\Http\Controllers\dashboardControllers\NotificationController;
 use App\Http\Controllers\dashboardControllers\OrderController;
 use App\Http\Controllers\dashboardControllers\ProductController;
@@ -36,6 +37,18 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::resource('orders', OrderController::class)->except(['edit', 'create']);
     Route::post('orders/{id}/update-status', [OrderController::class, 'updateStatus'])
         ->name('orders.update-status');
+
+    Route::resource('live-chat', LiveChatController::class)->only(['index', 'store']);
+
+    Route::get('live-chat/{user}/messages', [LiveChatController::class, 'getMessages'])
+        ->name('live-chat.messages');
+
+    Route::get('live-chat/{user}/unread-count', [LiveChatController::class, 'getUnreadCount'])
+        ->name('live-chat.unread-count');
+
+    Route::post('live-chat/{chat}/update-status', [LiveChatController::class, 'updateStatus'])
+        ->name('live-chat.update-status');
+
 });
 
 
