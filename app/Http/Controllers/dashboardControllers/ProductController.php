@@ -32,7 +32,7 @@ class ProductController extends Controller
             'status' => 'nullable|in:active,inactive',
             // إذا كانت الصور مرفوعة كملفات، يتم التحقق من كل ملف
             'images' => 'nullable',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'price' => 'required|numeric',
             'quantity' => 'required|integer',
             'views' => 'nullable|integer',
@@ -104,7 +104,7 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'status' => 'nullable|in:active,inactive',
             'images' => 'nullable',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'price' => 'sometimes|required|numeric',
             'quantity' => 'sometimes|required|integer',
             'views' => 'nullable|integer',

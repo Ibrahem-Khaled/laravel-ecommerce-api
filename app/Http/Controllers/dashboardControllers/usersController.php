@@ -75,7 +75,6 @@ class usersController extends Controller
             'name' => 'sometimes|required|string|max:255',
             'email' => 'sometimes|nullable|email|unique:users,email,' . $user->id,
             'phone' => 'sometimes|required|string|unique:users,phone,' . $user->id,
-            'password' => 'sometimes|required|string|min:6',
         ]);
 
         if ($validator->fails()) {
@@ -91,10 +90,6 @@ class usersController extends Controller
         $user->status = $request->status ?? $user->status;
         $user->role = $request->role ?? $user->role;
         $user->gender = $request->gender ?? $user->gender;
-
-        if ($request->password) {
-            $user->password = Hash::make($request->password);
-        }
 
         $user->save();
 

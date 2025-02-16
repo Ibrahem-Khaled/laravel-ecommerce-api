@@ -25,7 +25,7 @@ class subCategoryController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'status' => 'nullable|in:active,inactive',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // التأكد من أن الملف صورة وبامتدادات محددة
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048', // التأكد من أن الملف صورة وبامتدادات محددة
             'category_id' => 'required|exists:categories,id',
         ]);
 
@@ -83,7 +83,7 @@ class subCategoryController extends Controller
             'name' => 'sometimes|required|string|max:255',
             'description' => 'nullable|string',
             'status' => 'nullable|in:active,inactive',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'category_id' => 'sometimes|required|exists:categories,id',
         ]);
 

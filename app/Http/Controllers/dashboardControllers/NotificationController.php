@@ -24,7 +24,7 @@ class NotificationController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'message' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'user_id' => 'nullable|exists:users,id',
         ]);
 
@@ -77,7 +77,7 @@ class NotificationController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'sometimes|required|string|max:255',
             'message' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'user_id' => 'nullable|exists:users,id',
         ]);
 

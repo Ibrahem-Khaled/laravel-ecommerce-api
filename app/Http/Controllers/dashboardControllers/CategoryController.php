@@ -24,7 +24,7 @@ class CategoryController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'status' => 'nullable|in:active,inactive',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // تحقق من أن الملف صورة وبامتدادات محددة
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048', // تحقق من أن الملف صورة وبامتدادات محددة
         ]);
 
         if ($validator->fails()) {
@@ -77,7 +77,7 @@ class CategoryController extends Controller
             'name' => 'sometimes|required|string|max:255',
             'description' => 'nullable|string',
             'status' => 'nullable|in:active,inactive',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
         if ($validator->fails()) {
