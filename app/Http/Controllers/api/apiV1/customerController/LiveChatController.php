@@ -11,7 +11,7 @@ class LiveChatController extends Controller
     public function index()
     {
         $user = auth()->guard('api')->user();
-        $chats = $user->chats()->latest()->get();
+        $chats = $user->chats()->get();
         return response()->json($chats);
     }
 
