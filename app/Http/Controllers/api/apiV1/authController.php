@@ -80,11 +80,15 @@ class authController extends Controller
         if ($validatedData->fails()) {
             return response()->json(['errors' => $validatedData->errors()], 422);
         }
+
+        // تحميل الصورة إذا تم إرسالها
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images'), $imageName);
-            $user->image = $imageName;
+
+            // تخزين رابط الصورة في قاعدة البيانات
+            $user->image = url('images/' . $imageName); // إرجاع الرابط الكامل للصورة
         }
 
         $user->name = $request->name;
