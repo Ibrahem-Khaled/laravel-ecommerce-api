@@ -1,5 +1,12 @@
 <?php
 
+use App\Http\Controllers\dashboardControllers\CategoryController;
+use App\Http\Controllers\dashboardControllers\homeController;
+use App\Http\Controllers\dashboardControllers\NotificationController;
+use App\Http\Controllers\dashboardControllers\OrderController;
+use App\Http\Controllers\dashboardControllers\ProductController;
+use App\Http\Controllers\dashboardControllers\subCategoryController;
+use App\Http\Controllers\dashboardControllers\usersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +21,25 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(route('home.dashboard'));
+})->name('home');
+
+Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
+
+    Route::get('/dashboard', [homeController::class, 'index'])->name('home.dashboard');
+    Route::resource('users', usersController::class);
+    Route::resource('categories', CategoryController::class);
+    Route::resource('subCategories', subCategoryController::class);
+    Route::resource('products', ProductController::class);
+    Route::resource('notifications', NotificationController::class);
+
+    Route::resource('orders', OrderController::class)->except(['edit', 'create']);
+    Route::post('orders/{id}/update-status', [OrderController::class, 'updateStatus'])
+        ->name('orders.update-status');
 });
+
+
+
+
+
+require __DIR__ . '/web/auth.php';
