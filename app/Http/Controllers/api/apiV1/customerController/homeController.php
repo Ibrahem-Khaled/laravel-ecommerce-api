@@ -48,10 +48,9 @@ class homeController extends Controller
     }
 
 
-    public function Products(Request $request)
+    public function Products(Request $request, $subCategory = null)
     {
         $type = $request->query('type', 'basic');
-        $subCategory = $request->query('subCategory', null);
 
         if ($subCategory) {
             $products = SubCategory::find($subCategory)->products()
