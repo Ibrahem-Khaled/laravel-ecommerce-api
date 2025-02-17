@@ -66,6 +66,7 @@ class homeController extends Controller
     {
         $products = SubCategory::find($subCategory)->products()
             ->where('status', 'active')
+            ->where('type', '!=', 'hot')
             ->with(['subCategory.category', 'user'])
             ->orderByDesc('created_at')
             ->take(30)
