@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\apiV1\customerController;
 
 use App\Http\Controllers\Controller;
+use App\Models\AppSettings;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\SubCategory;
@@ -91,5 +92,11 @@ class homeController extends Controller
         $products = Product::where('name', 'like', '%' . $search . '%')
             ->with(['subCategory.category', 'user'])->get();
         return response()->json($products);
+    }
+
+    public function appSettings()
+    {
+        $appSettings = AppSettings::first();
+        return response()->json($appSettings);
     }
 }

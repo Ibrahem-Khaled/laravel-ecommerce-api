@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\dashboardControllers\AppSettingsController;
 use App\Http\Controllers\dashboardControllers\CategoryController;
 use App\Http\Controllers\dashboardControllers\homeController;
 use App\Http\Controllers\dashboardControllers\LiveChatController;
@@ -33,6 +34,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::resource('subCategories', subCategoryController::class);
     Route::resource('products', ProductController::class);
     Route::resource('notifications', NotificationController::class);
+
+    Route::resource('app-settings', AppSettingsController::class);
+
 
     Route::resource('orders', OrderController::class)->except(['edit', 'create']);
     Route::post('orders/{id}/update-status', [OrderController::class, 'updateStatus'])

@@ -14,7 +14,9 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('address')->nullable();
-            $table->string('phone')->nullable();
+            $table->string('lat')->nullable();
+            $table->string('lng')->nullable();
+            $table->float('fee')->default(0)->nullable();
             $table->enum('payment_method', ['cash_on_delivery', 'online_payment'])->default('cash_on_delivery');
             $table->enum('status', ['in_cart', 'pending', 'processing', 'delivered', 'cancelled'])->default('in_cart');
             $table->text('note')->nullable();

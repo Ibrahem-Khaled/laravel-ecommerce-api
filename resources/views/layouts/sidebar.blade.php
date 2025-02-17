@@ -59,5 +59,10 @@
             <i class="fas fa-fw fa-comments"></i>
             <span> المحادث الحية</span></a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('app-settings.index') }}">
+            <i class="fas fa-fw fa-cogs"></i>
+            <span> اعدادات التطبيق</span></a>
+    </li>
     
 </ul>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\apiV1\customerController;
 
 use App\Http\Controllers\Controller;
+use App\Models\AppSettings;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -34,6 +35,8 @@ class orderController extends Controller
     public function checkout(Request $request)
     {
         $user = auth()->guard('api')->user();
+        $fee = AppSettings::first()->commission;
+
         $order = Order::where('user_id', $user->id)->where('status', 'in_cart')->first();
         if (!$order) {
             return response()->json([
@@ -42,6 +45,7 @@ class orderController extends Controller
             ], 404);
         }
         $order->status = 'pending';
+        $order->fee = $fee ?? 10;
         $order->save();
 
         return response()->json([

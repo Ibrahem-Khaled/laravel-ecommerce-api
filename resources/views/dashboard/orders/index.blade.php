@@ -13,8 +13,8 @@
                         <tr>
                             <th>#</th>
                             <th>المستخدم</th>
-                            <th>العنوان</th>
                             <th>الهاتف</th>
+                            <th>العمولة</th>
                             <th>طريقة الدفع</th>
                             <th>الحالة</th>
                             <th>الإجراءات</th>
@@ -25,8 +25,8 @@
                             <tr>
                                 <td>{{ $order->id }}</td>
                                 <td>{{ $order->user->name }}</td>
-                                <td>{{ $order->address }}</td>
-                                <td>{{ $order->phone }}</td>
+                                <td>{{ $order->user->phone }}</td>
+                                <td>{{ $order->fee }}</td>
                                 <td>{{ $order->payment_method == 'cash_on_delivery' ? 'الدفع عند الاستلام' : 'دفع إلكتروني' }}
                                 </td>
                                 <td>
