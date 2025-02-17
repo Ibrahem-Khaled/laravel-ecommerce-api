@@ -48,25 +48,24 @@ class homeController extends Controller
     }
 
 
-    public function Products(Request $request, $subCategory = null)
+    public function getHotProducts()
     {
-        $type = $request->query('type', 'basic');
-
-        if ($subCategory) {
-            $products = SubCategory::find($subCategory)->products()
-                ->where('status', 'active')
-                ->with(['subCategory.category', 'user'])
-                ->orderByDesc('created_at')
-                ->take(30)
-                ->get();
-
-            return response()->json([
-                'products' => $products,
-            ]);
-        }
-
         $products = Product::where('status', 'active')
-            ->where('type', $type)
+            ->where('type', 'hot')
+            ->with(['subCategory.category', 'user'])
+            ->orderByDesc('created_at')
+            ->take(30)
+            ->get();
+
+        return response()->json([
+            'products' => $products
+        ]);
+    }
+
+    public function Products($subCategory)
+    {
+        $products = SubCategory::find($subCategory)->products()
+            ->where('status', 'active')
             ->with(['subCategory.category', 'user'])
             ->orderByDesc('created_at')
             ->take(30)
