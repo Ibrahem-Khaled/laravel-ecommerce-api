@@ -42,13 +42,13 @@
                                 Edit
                             </button>
                             <!-- Delete Form -->
-                            <form action="{{ route('app-settings.destroy', $setting->id) }}" method="POST"
+                            {{-- <form action="{{ route('app-settings.destroy', $setting->id) }}" method="POST"
                                 style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger"
                                     onclick="return confirm('Are you sure you want to delete this item?');">Delete</button>
-                            </form>
+                            </form> --}}
                         </td>
                     </tr>
 
