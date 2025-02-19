@@ -49,8 +49,20 @@ class homeController extends Controller
     }
 
 
-    public function getHotProducts()
+    public function getHotProducts($subCategoryId = null)
     {
+        if ($subCategoryId) {
+            $products = SubCategory::find($subCategoryId)->products()
+                ->where('status', 'active')
+                ->where('type', 'hot')
+                ->with(['subCategory.category', 'user'])
+                ->orderByDesc('created_at')
+                ->take(30)
+                ->get();
+            return response()->json([
+                'products' => $products
+            ]);
+        }
         $products = Product::where('status', 'active')
             ->where('type', 'hot')
             ->with(['subCategory.category', 'user'])

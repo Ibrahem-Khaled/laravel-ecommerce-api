@@ -43,7 +43,7 @@ Route::get('/category/{id}', [homeController::class, 'category']);
 Route::get('/get-all-sub-categories', [homeController::class, 'getAllSubCategories']);
 Route::get('/sub-categories/{id}', [homeController::class, 'subCategories']);
 
-Route::get('/get-hot-products', [homeController::class, 'getHotProducts']);
+Route::get('/get-hot-products/{subCategoryId?}', [homeController::class, 'getHotProducts']);
 Route::get('/get-products/{subCategory}', [HomeController::class, 'Products']);
 Route::get('/get-notification', [homeController::class, 'notification']);
 Route::get('/search', [homeController::class, 'search']);
