@@ -72,8 +72,8 @@ class homeController extends Controller
             ->where('type', 'hot')
             ->with(['subCategory', 'user'])
             ->orderByDesc('created_at')
-            ->take(30);
-
+            ->get();
+            
         // إعادة المنتجات في استجابة JSON
         return response()->json([
             'products' => $products
