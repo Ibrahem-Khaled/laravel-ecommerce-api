@@ -150,6 +150,7 @@ class orderController extends Controller
 
         $order->products()->updateExistingPivot($request->product_id, [
             'quantity' => $request->quantity <= 0 ? 1 : $request->quantity,
+            'price' => $request->quantity <= 0 ? 1 : $request->quantity * $order->products()->find($request->product_id)->price
         ]);
 
         return response()->json([
