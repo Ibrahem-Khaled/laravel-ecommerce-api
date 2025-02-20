@@ -70,10 +70,9 @@ class homeController extends Controller
         // إضافة الشروط العامة للمنتجات الساخنة والنشطة
         $products = $query->where('status', 'active')
             ->where('type', 'hot')
-            ->with(['subCategory.category', 'user'])
+            ->with(['subCategory', 'user'])
             ->orderByDesc('created_at')
-            ->take(30)
-            ->get();
+            ->take(30);
 
         // إعادة المنتجات في استجابة JSON
         return response()->json([
