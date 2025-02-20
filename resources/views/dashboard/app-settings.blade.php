@@ -21,7 +21,8 @@
                     <th>العنوان</th>
                     <th>الهاتف</th>
                     <th>البريد الإلكتروني</th>
-                    <th>العمولة</th>
+                    <th>سعر التوصيل</th>
+                    <th>الضريبة</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -34,7 +35,8 @@
                         <td>{{ $setting->address }}</td>
                         <td>{{ $setting->phone }}</td>
                         <td>{{ $setting->email }}</td>
-                        <td>{{ $setting->commission }}</td>
+                        <td>{{ $setting->shipping_cost }}</td>
+                        <td>{{ $setting->tax }}</td>
                         <td>
                             <!-- Button trigger modal for Edit -->
                             <button type="button" class="btn btn-warning" data-toggle="modal"
@@ -98,9 +100,14 @@
                                                 value="{{ $setting->email }}">
                                         </div>
                                         <div class="form-group">
-                                            <label for="commission">Commission</label>
-                                            <input type="number" step="0.01" name="commission" class="form-control"
-                                                value="{{ $setting->commission }}">
+                                            <label for="shipping_cost">shipping_cost</label>
+                                            <input type="number" step="0.01" name="shipping_cost" class="form-control"
+                                                value="{{ $setting->shipping_cost }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="tax">tax</label>
+                                            <input type="number" step="0.01" name="tax" class="form-control"
+                                                value="{{ $setting->tax }}">
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
