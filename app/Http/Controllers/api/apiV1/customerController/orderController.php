@@ -47,6 +47,10 @@ class orderController extends Controller
         $order->status = 'pending';
         $order->shipping_cost = $appSettings->shipping_cost ?? 10;
         $order->tax = $appSettings->tax ?? 10;
+
+        $order->lat = $request->lat;
+        $order->lng = $request->lng;
+
         $order->save();
 
         return response()->json([

@@ -11,8 +11,10 @@ class Order extends Model
     protected $appends = ['total_price'];
     protected $fillable = [
         'user_id',
-        'address',
-        'phone',
+        'lat',
+        'lng',
+        'shipping_cost',
+        'tax',
         'payment_method',
         'status',
         'note',
