@@ -46,6 +46,7 @@ Route::get('/sub-categories/{id}', [homeController::class, 'subCategories']);
 Route::get('/get-hot-products/{subCategoryId?}', [homeController::class, 'getHotProducts']);
 Route::get('/get-products/{subCategory}', [HomeController::class, 'Products']);
 Route::get('/get-notification', [homeController::class, 'notification']);
+Route::post('/mark-all-notifications-as-read', [homeController::class, 'markAllNotificationsAsRead']);
 Route::get('/search', [homeController::class, 'search']);
 
 Route::get('/user-cart', [orderController::class, 'cart']);

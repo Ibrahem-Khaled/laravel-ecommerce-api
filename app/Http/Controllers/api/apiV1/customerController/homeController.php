@@ -127,6 +127,37 @@ class homeController extends Controller
         ]);
     }
 
+    public function markAllNotificationsAsRead()
+    {
+        $user = auth()->guard('api')->user();
+
+        // جلب جميع الاشعارات الخاصة بالمستخدم أو العامة
+        $notifications = Notification::where('user_id', $user->id)
+            ->orWhere('user_id', null)
+            ->get();
+
+        // تحديد كل الاشعارات كمقروءة
+        foreach ($notifications as $notification) {
+            // التحقق من عدم وجود سجل مسبق
+            $existingRecord = DB::table('user_notification_readers')
+                ->where('user_id', $user->id)
+                ->where('notification_id', $notification->id)
+                ->first();
+
+            if (!$existingRecord) {
+                // إضافة سجل جديد
+                DB::table('user_notification_readers')->insert([
+                    'user_id' => $user->id,
+                    'notification_id' => $notification->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        }
+
+        return response()->json(['message' => 'All notifications marked as read']);
+    }
+
     public function search(Request $request)
     {
         $search = $request->query('q');
