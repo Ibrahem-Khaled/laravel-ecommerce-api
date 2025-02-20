@@ -101,6 +101,10 @@
                                                                 <option value="worker"
                                                                     {{ $user->role == 'worker' ? 'selected' : '' }}>عامل
                                                                 </option>
+                                                                <option value="delivery"
+                                                                    {{ $user->role == 'delivery' ? 'selected' : '' }}>مندوب
+                                                                    توصيل
+                                                                </option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -182,7 +186,7 @@
                         <div class="form-group">
                             <label for="password">كلمة المرور</label>
                             <input type="password" class="form-control" id="password" name="password" required>
-                        </div> 
+                        </div>
                         <div class="form-group">
                             <label for="status">الحالة</label>
                             <select class="form-control" id="status" name="status">
@@ -196,6 +200,7 @@
                                 <option value="user">مستخدم</option>
                                 <option value="admin">مدير</option>
                                 <option value="worker">عامل</option>
+                                <option value="delivery">مندوب توصيل</option>
                             </select>
                         </div>
                     </div>
