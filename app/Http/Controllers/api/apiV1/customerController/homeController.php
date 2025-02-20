@@ -7,6 +7,7 @@ use App\Models\AppSettings;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\SubCategory;
+use DB;
 use Illuminate\Http\Request;
 use App\Models\Notification;
 
@@ -94,8 +95,36 @@ class homeController extends Controller
     {
         $user = auth()->guard('api')->user();
 
-        $notifications = Notification::where('user_id', $user->id)->orWhere('user_id', null)->latest()->take(5)->get();
-        return response()->json($notifications);
+        // استرجاع آخر 5 اشعارات للمستخدم أو العامة
+        $notifications = Notification::where('user_id', $user->id)
+            ->orWhere('user_id', null)
+            ->latest()
+            ->take(5)
+            ->get();
+
+        // تحضير قائمة الاشعارات مع تحديد ما إذا كانت مقروءة
+        $notificationsWithReadStatus = $notifications->map(function ($notification) use ($user) {
+            $isRead = DB::table('user_notification_readers')
+                ->where('user_id', $user->id)
+                ->where('notification_id', $notification->id)
+                ->exists();
+
+            return [
+                'id' => $notification->id,
+                'title' => $notification->title,
+                'message' => $notification->message,
+                'read' => $isRead,
+                'created_at' => $notification->created_at,
+            ];
+        });
+
+        // حساب عدد الاشعارات الغير مقرؤة
+        $unreadCount = $notificationsWithReadStatus->where('read', false)->count();
+
+        return response()->json([
+            'notifications' => $notificationsWithReadStatus,
+            'unread_count' => $unreadCount,
+        ]);
     }
 
     public function search(Request $request)
