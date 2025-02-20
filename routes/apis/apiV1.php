@@ -59,6 +59,7 @@ Route::post('/remove-product-cart', [orderController::class, 'removeProduct']);
 Route::post('/update-quantity-product-cart', [orderController::class, 'updateQuantity']);
 
 Route::get('/live-chat', [LiveChatController::class, 'index']);
+Route::post('/mark-message-as-read', [LiveChatController::class, 'markMessageAsRead']);
 Route::post('/live-chat', [LiveChatController::class, 'store']);
 
 //this admin panel routes && CRUD

@@ -12,7 +12,19 @@ class LiveChatController extends Controller
     {
         $user = auth()->guard('api')->user();
         $chats = $user->chats()->get();
-        return response()->json($chats);
+
+        $unReadMessages = $user->chats()->where('status', 'unread')->count();
+        return response()->json([
+            'chats' => $chats,
+            'unReadMessages' => $unReadMessages
+        ]);
+    }
+
+    public function markMessageAsRead()
+    {
+        $user = auth()->guard('api')->user();
+        $user->chats()->where('status', 'unread')->update(['status' => 'read']);
+        return response()->json($user->chats()->where('status', 'unread')->count());
     }
 
     public function store(Request $request)
