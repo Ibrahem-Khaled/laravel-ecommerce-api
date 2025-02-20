@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
-
+    protected $appends = ['total_price'];
     protected $fillable = [
         'user_id',
         'address',
@@ -33,5 +33,13 @@ class Order extends Model
         return $this->belongsToMany(Product::class, 'order_items', 'order_id', 'product_id')
             ->withPivot('quantity', 'price')
             ->withTimestamps();
+    }
+
+
+    //this accessors to get the total price of the order
+    public function getTotalPriceAttribute()
+    {
+        $this->items()->sum('price');
+
     }
 }

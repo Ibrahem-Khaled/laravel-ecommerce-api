@@ -20,7 +20,8 @@ return new class extends Migration {
             $table->string('phone')->default('+966 50 000 0000')->nullable();
             $table->string('email')->default('Rg6ZM@example.com')->nullable();
 
-            $table->float('commission')->default(0)->nullable();
+            $table->float('tax')->default(0)->nullable();
+            $table->float('shipping_cost')->default(0)->nullable();
             
             $table->timestamps();
         });

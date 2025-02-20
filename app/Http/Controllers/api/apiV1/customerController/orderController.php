@@ -35,7 +35,7 @@ class orderController extends Controller
     public function checkout(Request $request)
     {
         $user = auth()->guard('api')->user();
-        $fee = AppSettings::first()->commission;
+        $appSettings = AppSettings::first();
 
         $order = Order::where('user_id', $user->id)->where('status', 'in_cart')->first();
         if (!$order) {
@@ -45,7 +45,8 @@ class orderController extends Controller
             ], 404);
         }
         $order->status = 'pending';
-        $order->fee = $fee ?? 10;
+        $order->shipping_cost = $appSettings->shipping_cost ?? 10;
+        $order->tax = $appSettings->tax ?? 10;
         $order->save();
 
         return response()->json([
@@ -100,7 +101,7 @@ class orderController extends Controller
             ], 404);
         }
 
-        $price = $product->price;
+        $price = $product->price * $quantity;
 
         // إضافة المنتج للطلب
         $order->products()->syncWithoutDetaching([
