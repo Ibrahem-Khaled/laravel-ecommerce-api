@@ -163,8 +163,12 @@
                             <input type="email" name="email" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="commission">Commission</label>
-                            <input type="number" step="0.01" name="commission" class="form-control">
+                            <label for="shipping_cost">shipping_cost</label>
+                            <input type="number" step="0.01" name="shipping_cost" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="tax">tax</label>
+                            <input type="number" step="0.01" name="tax" class="form-control">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
