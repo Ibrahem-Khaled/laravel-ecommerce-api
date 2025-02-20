@@ -39,7 +39,6 @@ class Order extends Model
     //this accessors to get the total price of the order
     public function getTotalPriceAttribute()
     {
-        $this->items()->sum('price');
-
+        return $this->items()->sum('price');
     }
 }
