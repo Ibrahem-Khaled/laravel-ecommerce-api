@@ -52,25 +52,30 @@ class homeController extends Controller
 
     public function getHotProducts($subCategoryId = null)
     {
+        // بدء استعلام للمنتجات
+        $query = Product::query();
+
+        // في حال تم تمرير معرف الفئة الفرعية
         if ($subCategoryId) {
-            $products = SubCategory::find($subCategoryId)->products()
-                ->where('status', 'active')
-                ->where('type', 'hot')
-                ->with(['subCategory.category', 'user'])
-                ->orderByDesc('created_at')
-                ->take(30)
-                ->get();
-            return response()->json([
-                'products' => $products
-            ]);
+            // محاولة جلب الفئة الفرعية بالمعرف المحدد
+            $subCategory = SubCategory::find($subCategoryId);
+            if (!$subCategory) {
+                // إعادة استجابة بخطأ 404 إذا لم يتم العثور على الفئة الفرعية
+                return response()->json(['error' => 'الفئة الفرعية غير موجودة'], 404);
+            }
+            // إضافة شرط لتحديد المنتجات التي تنتمي إلى الفئة الفرعية
+            $query->where('sub_category_id', $subCategory->id);
         }
-        $products = Product::where('status', 'active')
+
+        // إضافة الشروط العامة للمنتجات الساخنة والنشطة
+        $products = $query->where('status', 'active')
             ->where('type', 'hot')
             ->with(['subCategory.category', 'user'])
             ->orderByDesc('created_at')
             ->take(30)
             ->get();
 
+        // إعادة المنتجات في استجابة JSON
         return response()->json([
             'products' => $products
         ]);
