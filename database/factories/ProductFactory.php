@@ -23,16 +23,24 @@ class ProductFactory extends Factory
         $faker = \Faker\Factory::create('ar_SA');
 
         return [
+            // اختيار فئة فرعية عشوائية، وإذا لم توجد فئة سيتم إنشاء واحدة باستخدام المصنع
             'sub_category_id' => SubCategory::inRandomOrder()->first()->id ?? SubCategory::factory(),
+            // اختيار مستخدم عشوائي، وإذا لم يوجد مستخدم سيتم إنشاء واحد باستخدام المصنع
             'user_id' => User::inRandomOrder()->first()->id ?? User::factory(),
-            'name' => $this->faker->word,
-            'description' => $this->faker->sentence,
-            'status' => $this->faker->randomElement(['active', 'inactive']),
-            // 'images' => json_encode([$this->faker->imageUrl(400, 400, 'products')]),
-            'price' => $this->faker->randomFloat(2, 10, 1000),
-            'quantity' => $this->faker->numberBetween(1, 100),
-            'views' => $this->faker->numberBetween(0, 1000),
-            'type' => $this->faker->randomElement(['basic', 'hot', 'new', 'special']),
+            // اسم المنتج (كلمة عربية عشوائية)
+            'name' => $faker->word,
+            // وصف مختصر للمنتج باللغة العربية
+            'description' => $faker->sentence,
+            // حالة المنتج: نشط أو غير نشط
+            'status' => $faker->randomElement(['active', 'inactive']),
+            // سعر المنتج بدقة رقمية تصل إلى رقمين عشريين
+            'price' => $faker->randomFloat(2, 10, 1000),
+            // كمية المنتج المتوفرة
+            'quantity' => $faker->numberBetween(1, 100),
+            // عدد مشاهدات المنتج
+            'views' => $faker->numberBetween(0, 1000),
+            // نوع المنتج: عادي، ساخن، جديد أو خاص
+            'type' => $faker->randomElement(['basic', 'hot', 'new', 'special']),
         ];
     }
 }
