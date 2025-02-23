@@ -8,6 +8,7 @@ use App\Http\Controllers\dashboardControllers\LiveChatController;
 use App\Http\Controllers\dashboardControllers\NotificationController;
 use App\Http\Controllers\dashboardControllers\OrderController;
 use App\Http\Controllers\dashboardControllers\ProductController;
+use App\Http\Controllers\dashboardControllers\SelectStoreController;
 use App\Http\Controllers\dashboardControllers\subCategoryController;
 use App\Http\Controllers\dashboardControllers\usersController;
 use Illuminate\Support\Facades\Route;
@@ -55,6 +56,8 @@ Route::group(['middleware' => ['auth', 'checkRole:admin'], 'prefix' => 'dashboar
 
     // إرسال رسالة للمستخدم المحدد (AJAX)
     Route::post('live-chat/send/{userId}', [LiveChatController::class, 'sendMessage'])->name('dashboard.live-chat.send');
+
+    Route::resource('select-stores', SelectStoreController::class);
 
 
 });

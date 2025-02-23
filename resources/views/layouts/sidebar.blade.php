@@ -75,5 +75,10 @@
             <i class="fas fa-fw fa-cogs"></i>
             <span> اعدادات التطبيق</span></a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('stores.index') }}">
+            <i class="fas fa-fw fa-store"></i>
+            <span> اعدادات المتاجر</span></a>
+    </li>
 
 </ul>
