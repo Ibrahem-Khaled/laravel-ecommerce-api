@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\LiveChat;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +20,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        view()->composer('*', function ($view) {
+            $unreadMessagesCount = LiveChat::where('status', 'unread')->count();
+            $view->with('unreadMessagesCount', $unreadMessagesCount);
+        });
     }
 }

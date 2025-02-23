@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api\apiV1\customerController;
 
 use App\Http\Controllers\Controller;
 use App\Models\AppSettings;
+use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -44,6 +45,15 @@ class orderController extends Controller
                 'message' => 'لم تقم بطلب منتجات'
             ], 404);
         }
+
+        if ($request->coupon) {
+            Coupon::where('code', $request->coupon)->update([
+                'is_used' => true,
+                'user_id' => $user->id,
+                'order_id' => $order->id,
+            ]);
+        }
+
         $order->status = 'pending';
         $order->shipping_cost = $appSettings->shipping_cost ?? 10;
         $order->tax = $appSettings->tax ?? 10;

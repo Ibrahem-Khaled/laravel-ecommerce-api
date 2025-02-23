@@ -20,6 +20,7 @@
                                     <th>الوصف</th>
                                     <th>الصور</th>
                                     <th>السعر</th>
+                                    <th>السعر بعد الخصم</th>
                                     <th>الكمية</th>
                                     <th>النوع</th>
                                     <th>الحالة</th>
@@ -45,6 +46,7 @@
                                             @endif
                                         </td>
                                         <td>{{ $product->price }}</td>
+                                        <td>{{ $product->price_after_discount }}</td>
                                         <td>{{ $product->quantity }}</td>
                                         <td>{{ $product->type }}</td>
                                         <td>{{ $product->status }}</td>
@@ -117,6 +119,12 @@
                                                             <label for="price">السعر</label>
                                                             <input type="number" class="form-control" id="price"
                                                                 name="price" value="{{ $product->price }}" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="price_after_discount">السعر بعد الخصم</label>
+                                                            <input type="number" class="form-control"
+                                                                id="price_after_discount" name="price_after_discount"
+                                                                value="{{ $product->price_after_discount }}">
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="quantity">الكمية</label>
@@ -249,6 +257,11 @@
                         <div class="form-group">
                             <label for="price">السعر</label>
                             <input type="number" class="form-control" id="price" name="price" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="price_after_discount">السعر بعد الخصم</label>
+                            <input type="number" class="form-control" id="price_after_discount"
+                                name="price_after_discount">
                         </div>
                         <div class="form-group">
                             <label for="quantity">الكمية</label>

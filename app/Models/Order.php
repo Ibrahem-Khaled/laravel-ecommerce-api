@@ -37,10 +37,27 @@ class Order extends Model
             ->withTimestamps();
     }
 
+    public function coupon()
+    {
+        return $this->hasOne(Coupon::class);
+    }
+
 
     //this accessors to get the total price of the order
     public function getTotalPriceAttribute()
     {
-        return  $this->items()->sum('price');
+        return $this->items()->sum('price');
+    }
+
+
+    public function getPriceAfterDiscountAttribute()
+    {
+        if ($this->coupon) {
+            return $this->total_price - $this->coupon->type == 'percentage' ?
+                ($this->total_price * $this->coupon->value) / 100
+                :
+                $this->coupon->value;
+        }
+        return $this->total_price;
     }
 }

@@ -60,6 +60,10 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsToMany(Notification::class, 'user_notification_readers', 'user_id', 'notification_id');
     }
 
+    public function coupons()
+    {
+        return $this->hasMany(Coupon::class);
+    }
 
     public function getJWTIdentifier()
     {
@@ -69,4 +73,8 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+
+
+    //this accessors method
 }

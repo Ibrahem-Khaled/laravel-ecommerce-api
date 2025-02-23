@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->json('images')->nullable();
             $table->decimal('price', 8, 2);
+            $table->decimal('price_after_discount', 8, 2)->default(0);
             $table->integer('quantity');
             $table->bigInteger('views')->default(0);
             $table->enum('type', ['basic', 'hot', 'new', 'special'])->default('basic');

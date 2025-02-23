@@ -55,14 +55,25 @@
             <span> الطلبات</span></a>
     </li>
     <li class="nav-item">
+
         <a class="nav-link" href="{{ route('live-chat.index') }}">
             <i class="fas fa-fw fa-comments"></i>
-            <span> المحادث الحية</span></a>
+            <span> المحادث الحية
+                @if ($unreadMessagesCount > 0)
+                    <span class="badge bg-danger text-white ">{{ $unreadMessagesCount }}</span>
+                @endif
+            </span></a>
+
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('coupons.index') }}">
+            <i class="fas fa-fw fa-tags"></i>
+            <span> اعدادات الكوبونات</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ route('app-settings.index') }}">
             <i class="fas fa-fw fa-cogs"></i>
             <span> اعدادات التطبيق</span></a>
     </li>
-    
+
 </ul>

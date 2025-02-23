@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\dashboardControllers\AppSettingsController;
 use App\Http\Controllers\dashboardControllers\CategoryController;
+use App\Http\Controllers\dashboardControllers\CouponController;
 use App\Http\Controllers\dashboardControllers\homeController;
 use App\Http\Controllers\dashboardControllers\LiveChatController;
 use App\Http\Controllers\dashboardControllers\NotificationController;
@@ -34,8 +35,9 @@ Route::group(['middleware' => ['auth', 'checkRole:admin'], 'prefix' => 'dashboar
     Route::resource('subCategories', subCategoryController::class);
     Route::resource('products', ProductController::class);
     Route::resource('notifications', NotificationController::class);
-
+    Route::resource('coupons', CouponController::class);
     Route::resource('app-settings', AppSettingsController::class);
+
 
 
     Route::resource('orders', OrderController::class)->except(['edit', 'create']);
