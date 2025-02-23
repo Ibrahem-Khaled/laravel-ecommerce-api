@@ -57,7 +57,7 @@ Route::group(['middleware' => ['auth', 'checkRole:admin'], 'prefix' => 'dashboar
     // إرسال رسالة للمستخدم المحدد (AJAX)
     Route::post('live-chat/send/{userId}', [LiveChatController::class, 'sendMessage'])->name('dashboard.live-chat.send');
 
-    Route::resource('select-stores', SelectStoreController::class);
+    Route::resource('stores', SelectStoreController::class);
 
 
 });
