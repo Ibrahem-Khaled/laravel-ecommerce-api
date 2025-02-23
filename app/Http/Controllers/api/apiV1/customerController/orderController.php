@@ -115,7 +115,7 @@ class orderController extends Controller
             ], 404);
         }
 
-        $price = $product->price * $quantity;
+        $price = $product->price_after_discount > 0 ? $product->price_after_discount : $product->price * $quantity;
 
         // إضافة المنتج للطلب
         $order->products()->syncWithoutDetaching([
@@ -164,7 +164,8 @@ class orderController extends Controller
 
         $order->products()->updateExistingPivot($request->product_id, [
             'quantity' => $request->quantity <= 0 ? 1 : $request->quantity,
-            'price' => $request->quantity <= 0 ? 1 : $request->quantity * $order->products()->find($request->product_id)->price
+            'price' => $request->quantity <= 0 ? 1 : $request->quantity * $order->products()->find($request->product_id)->price_after_discount > 0 ?
+                $order->products()->find($request->product_id)->price_after_discount : $order->products()->find($request->product_id)->price
         ]);
 
         return response()->json([
