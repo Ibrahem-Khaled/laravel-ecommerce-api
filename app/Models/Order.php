@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
-    protected $appends = ['total_price'];
+    protected $appends = ['total_price', 'price_after_discount'];
     protected $fillable = [
         'user_id',
         'lat',
