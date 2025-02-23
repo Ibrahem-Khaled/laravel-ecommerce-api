@@ -52,12 +52,24 @@ class Order extends Model
 
     public function getPriceAfterDiscountAttribute()
     {
+        // تأكد من أن total_price و coupon->value هي أرقام
+        $totalPrice = (float) $this->total_price;
+
         if ($this->coupon) {
-            return $this->total_price - $this->coupon->type == 'percentage' ?
-                (($this->total_price * $this->coupon->value) / 100)
-                :
-                $this->coupon->value;
+            $couponValue = (float) $this->coupon->value;
+
+            // حساب السعر بعد الخصم بناءً على نوع الكوبون
+            if ($this->coupon->type == 'percentage') {
+                $discountAmount = ($totalPrice * $couponValue) / 100;
+            } else {
+                $discountAmount = $couponValue;
+            }
+
+            // تأكد من أن الخصم لا يتجاوز السعر الإجمالي
+            $priceAfterDiscount = $totalPrice - $discountAmount;
+            return max($priceAfterDiscount, 0); // تجنب القيم السالبة
         }
-        return $this->total_price;
+
+        return $totalPrice;
     }
 }
