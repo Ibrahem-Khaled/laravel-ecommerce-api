@@ -51,17 +51,15 @@ class Order extends Model
 
 
     public function getPriceAfterDiscountAttribute()
-{
-    $price = (float) $this->total_price;
+    {
+        $price = (float) $this->total_price;
 
-    if ($this->coupon) {
-        $couponValue = (float) $this->coupon->value;
+        if ($this->coupon) {
+            return ($this->coupon->type == 'percentage')
+                ? ($this->price - ($this->price * $this->coupon->value / 100))
+                : ($this->price - $this->coupon->value);
+        }
 
-        return ($this->coupon->type === 'percentage')
-            ? $price - ($price * $couponValue / 100)
-            : $price - $couponValue;
+        return $price;
     }
-
-    return $price;
-}
 }
