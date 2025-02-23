@@ -66,6 +66,7 @@ class ProductController extends Controller
             'status' => $request->status ?? 'active',
             'images' => $imagesJson,
             'price' => $request->price,
+            'price_after_discount' => $request->price_after_discount,
             'quantity' => $request->quantity,
             'views' => $request->views ?? 0,
             'type' => $request->type,
@@ -135,6 +136,7 @@ class ProductController extends Controller
         $product->description = $request->description ?? $product->description;
         $product->status = $request->status ?? $product->status;
         $product->price = $request->price ?? $product->price;
+        $product->price_after_discount = $request->price_after_discount ?? $product->price_after_discount;
         $product->quantity = $request->quantity ?? $product->quantity;
         $product->views = $request->views ?? $product->views;
         $product->type = $request->type ?? $product->type;
