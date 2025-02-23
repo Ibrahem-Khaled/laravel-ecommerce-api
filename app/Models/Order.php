@@ -52,12 +52,22 @@ class Order extends Model
 
     public function getPriceAfterDiscountAttribute()
     {
+        // تأكد أن السعر عددي
+        $price = (float) $this->total_price;
+
         if ($this->coupon) {
-            return $this->total_price - $this->coupon->type == 'percentage' ?
-                ($this->total_price * $this->coupon->value) / 100
-                :
-                $this->coupon->value;
+            // تأكد أيضًا أن قيمة الكوبون عددية
+            $couponValue = (float) $this->coupon->value;
+
+            if ($this->coupon->type === 'percentage') {
+                // طرح النسبة المئوية من السعر
+                return $price - ($price * $couponValue / 100);
+            } else {
+                // طرح قيمة ثابتة
+                return $price - $couponValue;
+            }
         }
-        return $this->total_price;
+
+        return $price;
     }
 }
