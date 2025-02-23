@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AppSettings;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\SelectStore;
 use App\Models\SubCategory;
 use DB;
 use Illuminate\Http\Request;
@@ -177,6 +178,11 @@ class homeController extends Controller
     public function appSettings()
     {
         $appSettings = AppSettings::first();
+        return response()->json($appSettings);
+    }
+    public function selectStore()
+    {
+        $appSettings = SelectStore::get();
         return response()->json($appSettings);
     }
 }

@@ -37,6 +37,7 @@ Route::middleware('auth:api')->group(function () {
 
 //this routes for customer main
 Route::get('/app-settings', [homeController::class, 'appSettings']);
+Route::get('/select-store', [homeController::class, 'selectStore']);
 Route::get('/get-all-categories', [homeController::class, 'categories']);
 Route::get('/category/{id}', [homeController::class, 'category']);
 

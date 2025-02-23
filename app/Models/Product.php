@@ -15,6 +15,7 @@ class Product extends Model
         'status',
         'images',
         'price',
+        'price_after_discount',
         'quantity',
         'views',
 
