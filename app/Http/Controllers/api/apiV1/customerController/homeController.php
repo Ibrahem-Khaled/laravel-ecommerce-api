@@ -118,6 +118,7 @@ class homeController extends Controller
                 'id' => $notification->id,
                 'title' => $notification->title,
                 'message' => $notification->message,
+                'image' => $notification->image,
                 'read' => $isRead,
                 'created_at' => $notification->created_at,
             ];
@@ -167,7 +168,9 @@ class homeController extends Controller
     {
         $search = $request->query('q');
         $products = Product::where('name', 'like', '%' . $search . '%')
-            ->with(['subCategory.category', 'user'])->get();
+            ->orWhere('description', 'like', '%' . $search . '%')
+            ->with(['subCategory.category', 'user'])
+            ->get();
         return response()->json($products);
     }
 

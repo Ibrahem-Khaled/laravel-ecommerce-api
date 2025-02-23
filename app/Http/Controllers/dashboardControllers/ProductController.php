@@ -68,7 +68,7 @@ class ProductController extends Controller
             'price' => $request->price,
             'quantity' => $request->quantity,
             'views' => $request->views ?? 0,
-            'type' => $request->type ?? 'basic',
+            'type' => $request->type,
         ]);
 
         return redirect()->route('products.index')->with('success', 'تم انشاء المنتج بنجاح');
