@@ -9,14 +9,14 @@ use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
-class orderController extends Controller
+class OrderController extends Controller
 {
     public function cart()
     {
         $user = auth()->guard('api')->user();
 
-        $orders = $user->orders()->where('status', 'in_cart')->latest()->first();
-        if (!$orders) {
+        $order = $user->orders()->where('status', 'in_cart')->latest()->first();
+        if (!$order) {
             return response()->json([
                 'success' => false,
                 'orders' => [],
@@ -24,12 +24,12 @@ class orderController extends Controller
             ], 404);
         }
 
-        $orders->load('products');
+        $order->load('products');
         return response()->json([
             'success' => true,
-            'orders' => $orders,
-            'order_count' => $orders->products()->count(),
-            // 'total_price' => $orders->products()->sum('price')
+            'orders' => $order,
+            'order_count' => $order->products()->count(),
+            // 'total_price' => $order->products()->sum('price')
         ], 200);
     }
 
@@ -130,6 +130,7 @@ class orderController extends Controller
             'order' => $order->load('products') // تحميل المنتجات المرتبطة
         ], 200);
     }
+
     public function removeProduct(Request $request)
     {
         $user = auth()->guard('api')->user();
@@ -162,10 +163,20 @@ class orderController extends Controller
             ], 404);
         }
 
+        $product = $order->products()->find($request->product_id);
+        if (!$product) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Product not found in order',
+            ], 404);
+        }
+
+        $quantity = $request->quantity <= 0 ? 1 : $request->quantity;
+        $price = $product->price_after_discount > 0 ? $product->price_after_discount : $product->price;
+
         $order->products()->updateExistingPivot($request->product_id, [
-            'quantity' => $request->quantity <= 0 ? 1 : $request->quantity,
-            'price' => $request->quantity <= 0 ? 1 : $request->quantity * $order->products()->find($request->product_id)->price_after_discount > 0 ?
-                $order->products()->find($request->product_id)->price_after_discount : $order->products()->find($request->product_id)->price
+            'quantity' => $quantity,
+            'price' => $quantity * $price
         ]);
 
         return response()->json([
